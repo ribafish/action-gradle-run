@@ -139,7 +139,7 @@ runs:
       run: echo "Double Condition=${{ inputs.condition }}"
       shell: bash
     - name: Check build build_cache
-      if: inputs.build_cache
+      if: inputs.build_cache == true
       run: echo "build_cache ${{ inputs.build_cache }}"
       shell: bash
 
