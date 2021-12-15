@@ -1,0 +1,112 @@
+name: "Gradle run"
+description: "Runs gradle tasks with preset and customizable arguments and flags"
+
+inputs:
+
+  gradle_task:
+    description: "The gradle task you wish to run"
+    type: string
+    required: true
+
+  gradle_workDir:
+    description: "Working directory, in which the gradle command will be executed"
+    type: string
+    required: false
+    default: ''
+    
+  gradle_flags:
+    description: "Additional gradle flags to add"
+    required: false
+    default: ''
+    
+  parallel:
+    description: "Set parallel build [true]"
+    type: boolean
+    required: false
+    default: true
+
+  build_cache:
+    description: "Set build cache enabled [false]"
+    type: boolean
+    required: false
+    default: false
+
+  clean_build:
+    description: "WIP - Execute clean prior to running main task [false]"
+    type: boolean
+    required: false
+    default: false
+
+  sdk_download:
+    description: "Download sdk image -Pandroid.builder.sdkDownload [false]"
+    type: boolean
+    required: false
+    default: false
+
+  jvm_args:
+    description: "Jvm Args [-Xmx3g -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8 -Dkotlin.daemon.jvm.options=-Xmx1g]"
+    type: string
+    required: false
+    default: '-Xmx3g -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8 -Dkotlin.daemon.jvm.options=-Xmx1g'
+
+  java_home:
+    description: "Java home args [$JAVA_HOME_11_X64]"
+    type: string
+    required: false
+    default: $JAVA_HOME_11_X64
+
+  success_artefact_location:
+    description: "Location of the artefact to upload if previous step succeeded, upload will not commence if no value is provided [Optional]"
+    type: string
+    required: false
+    default: ''
+
+  success_artefact_name:
+    description: "Name of the uploaded artefact if previous step succeeded, upload will not commence if no value is provided [Optional]"
+    type: string
+    required: false
+    default: ''
+
+  failure_artefact_location:
+    description: "Location of the artefact to upload if previous step failed, upload will not commence if no value is provided [Optional]"
+    type: string
+    required: false
+    default: ''
+
+  failure_artefact_name:
+    description: "Name of the uploaded artefact if previous step failed, upload will not commence if no value is provided [Optional]"
+    type: string
+    required: false
+    default: ''
+
+
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout branch
+      uses: actions/checkout@v2
+
+    - run: echo "runner ${{ inputs.runner }}"
+    - run: echo "gradle_task ${{ inputs.gradle_task }}"
+    - run: echo "parallel ${{ inputs.parallel }}"
+    - run: echo "build_cache ${{ inputs.build_cache }}"
+    - run: echo "clean_build ${{ inputs.clean_build }}"
+    - run: echo "sdk_download ${{ inputs.sdk_download }}"
+    - run: echo "jvm_args ${{ inputs.jvm_args }}"
+    - run: echo "java_home ${{ inputs.java_home }}"
+    - run: echo "success_artefact_location ${{ inputs.success_artefact_location }}"
+    - run: echo "success_artefact_name ${{ inputs.success_artefact_name }}"
+    - run: echo "failure_artefact_location ${{ inputs.failure_artefact_location }}"
+    - run: echo "failure_artefact_name ${{ inputs.failure_artefact_name }}"
+    - run: echo "timeout-minutes ${{ inputs.timeout-minutes }}"
+
+    - name: Run Gradle task
+      working-directory: ./${{ inputs.workDir }}
+      run: >-
+        ./gradlew ${{ inputs.gradle_task }}
+        -Dorg.gradle.parallel=${{ inputs.parallel }}
+        -Dorg.gradle.caching=${{ inputs.build_cache }}
+        -Dorg.gradle.java.home=${{ inputs.java_home }}
+        -Dorg.gradle.jvmargs="${{ inputs.jvm_args }}"
+        -Pandroid.builder.sdkDownload=${{ inputs.sdk_download }}
+        ${{ inputs.gradle_flags }}
