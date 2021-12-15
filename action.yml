@@ -83,25 +83,35 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Echo inputs
+    - run: echo "runner ${{ inputs.runner }}"
       shell: bash
-      run: >-
-      echo "runner ${{ inputs.runner }}"
-      && echo "gradle_task ${{ inputs.gradle_task }}"
-      && echo "parallel ${{ inputs.parallel }}"
-      && echo "build_cache ${{ inputs.build_cache }}"
-      && echo "clean_build ${{ inputs.clean_build }}"
-      && echo "sdk_download ${{ inputs.sdk_download }}"
-      && echo "jvm_args ${{ inputs.jvm_args }}"
-      && echo "java_home ${{ inputs.java_home }}"
-      && echo "success_artefact_location ${{ inputs.success_artefact_location }}"
-      && echo "success_artefact_name ${{ inputs.success_artefact_name }}"
-      && echo "failure_artefact_location ${{ inputs.failure_artefact_location }}"
-      && echo "failure_artefact_name ${{ inputs.failure_artefact_name }}"
-      && echo "timeout-minutes ${{ inputs.timeout-minutes }}"
+    - run: echo "gradle_task ${{ inputs.gradle_task }}"
+      shell: bash
+    - run: echo "parallel ${{ inputs.parallel }}"
+      shell: bash
+    - run: echo "build_cache ${{ inputs.build_cache }}"
+      shell: bash
+    - run: echo "clean_build ${{ inputs.clean_build }}"
+      shell: bash
+    - run: echo "sdk_download ${{ inputs.sdk_download }}"
+      shell: bash
+    - run: echo "jvm_args ${{ inputs.jvm_args }}"
+      shell: bash
+    - run: echo "java_home ${{ inputs.java_home }}"
+      shell: bash
+    - run: echo "success_artefact_location ${{ inputs.success_artefact_location }}"
+      shell: bash
+    - run: echo "success_artefact_name ${{ inputs.success_artefact_name }}"
+      shell: bash
+    - run: echo "failure_artefact_location ${{ inputs.failure_artefact_location }}"
+      shell: bash
+    - run: echo "failure_artefact_name ${{ inputs.failure_artefact_name }}"
+      shell: bash
+    - run: echo "timeout-minutes ${{ inputs.timeout-minutes }}"
+      shell: bash
 
     - name: Run Gradle task
-      working-directory: ./${{ inputs.workDir }}
+      working-directory: ./${{ inputs.gradle_workDir }}
       shell: bash
       run: >-
         ./gradlew ${{ inputs.gradle_task }}
