@@ -83,25 +83,26 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Checkout branch
-      uses: actions/checkout@v2
-
-    - run: echo "runner ${{ inputs.runner }}"
-    - run: echo "gradle_task ${{ inputs.gradle_task }}"
-    - run: echo "parallel ${{ inputs.parallel }}"
-    - run: echo "build_cache ${{ inputs.build_cache }}"
-    - run: echo "clean_build ${{ inputs.clean_build }}"
-    - run: echo "sdk_download ${{ inputs.sdk_download }}"
-    - run: echo "jvm_args ${{ inputs.jvm_args }}"
-    - run: echo "java_home ${{ inputs.java_home }}"
-    - run: echo "success_artefact_location ${{ inputs.success_artefact_location }}"
-    - run: echo "success_artefact_name ${{ inputs.success_artefact_name }}"
-    - run: echo "failure_artefact_location ${{ inputs.failure_artefact_location }}"
-    - run: echo "failure_artefact_name ${{ inputs.failure_artefact_name }}"
-    - run: echo "timeout-minutes ${{ inputs.timeout-minutes }}"
+    - name: Echo inputs
+      shell: bash
+      run: >-
+      echo "runner ${{ inputs.runner }}"
+      && echo "gradle_task ${{ inputs.gradle_task }}"
+      && echo "parallel ${{ inputs.parallel }}"
+      && echo "build_cache ${{ inputs.build_cache }}"
+      && echo "clean_build ${{ inputs.clean_build }}"
+      && echo "sdk_download ${{ inputs.sdk_download }}"
+      && echo "jvm_args ${{ inputs.jvm_args }}"
+      && echo "java_home ${{ inputs.java_home }}"
+      && echo "success_artefact_location ${{ inputs.success_artefact_location }}"
+      && echo "success_artefact_name ${{ inputs.success_artefact_name }}"
+      && echo "failure_artefact_location ${{ inputs.failure_artefact_location }}"
+      && echo "failure_artefact_name ${{ inputs.failure_artefact_name }}"
+      && echo "timeout-minutes ${{ inputs.timeout-minutes }}"
 
     - name: Run Gradle task
       working-directory: ./${{ inputs.workDir }}
+      shell: bash
       run: >-
         ./gradlew ${{ inputs.gradle_task }}
         -Dorg.gradle.parallel=${{ inputs.parallel }}
