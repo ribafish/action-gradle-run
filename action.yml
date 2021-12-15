@@ -138,6 +138,11 @@ runs:
       if: inputs.condition != '' && inputs.condition != ''
       run: echo "Double Condition=${{ inputs.condition }}"
       shell: bash
+    - name: Check build build_cache
+      if: inputs.build_cache
+      run: echo "build_cache ${{ inputs.build_cache }}"
+      shell: bash
+
 
     - name: Checkout branch
       uses: actions/checkout@v2
