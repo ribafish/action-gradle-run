@@ -27,9 +27,9 @@ inputs:
 
   build_cache:
     description: "Set build cache enabled [false]"
-    type: boolean
+    type: string
     required: false
-    default: false
+    default: 'false'
 
   clean_build:
     description: "WIP - Execute clean prior to running main task [false]"
@@ -139,7 +139,7 @@ runs:
       run: echo "Double Condition=${{ inputs.condition }}"
       shell: bash
     - name: Check build build_cache
-      if: inputs.build_cache == true
+      if: inputs.build_cache == 'true'
       run: echo "build_cache ${{ inputs.build_cache }}"
       shell: bash
 
