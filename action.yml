@@ -79,6 +79,14 @@ inputs:
     required: false
     default: ''
 
+  maven_username:
+    description: "Username to access the internal maven repository"
+    required: true
+
+  maven_password:
+    description: "Password to access the internal maven repository"
+    required: true
+
 
 runs:
   using: "composite"
@@ -120,6 +128,6 @@ runs:
         -Dorg.gradle.java.home=${{ inputs.java_home }}
         -Dorg.gradle.jvmargs="${{ inputs.jvm_args }}"
         -Pandroid.builder.sdkDownload=${{ inputs.sdk_download }}
-        -PglobalidMavenUsername=${{ github.actor }}
-        -PglobalidMavenPassword=${{ secrets.SECRET_PASSWORD_TEST }}
+        -PMavenUsername=${{ inputs.maven_username }}
+        -PMavenPassword=${{ inputs.maven_password }}
         ${{ inputs.gradle_flags }}
