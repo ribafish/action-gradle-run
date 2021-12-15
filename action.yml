@@ -120,4 +120,6 @@ runs:
         -Dorg.gradle.java.home=${{ inputs.java_home }}
         -Dorg.gradle.jvmargs="${{ inputs.jvm_args }}"
         -Pandroid.builder.sdkDownload=${{ inputs.sdk_download }}
+        -PglobalidMavenUsername=${{ github.actor }}
+        -PglobalidMavenPassword=${{ secrets.SECRET_PASSWORD_TEST }}
         ${{ inputs.gradle_flags }}
