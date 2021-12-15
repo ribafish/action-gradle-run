@@ -117,6 +117,8 @@ runs:
       shell: bash
     - run: echo "timeout-minutes ${{ inputs.timeout-minutes }}"
       shell: bash
+    - run: echo "runner.os ${{ runner.os }}"
+      shell: bash
 
     - name: Checkout branch
       uses: actions/checkout@v2
