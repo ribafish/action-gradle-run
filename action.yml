@@ -87,6 +87,11 @@ inputs:
     description: "Password to access the internal maven repository"
     required: true
 
+  condition:
+    description: "Condition to print it out if not empty"
+    required: false
+    default: ''
+
 
 runs:
   using: "composite"
@@ -118,6 +123,10 @@ runs:
     - run: echo "timeout-minutes ${{ inputs.timeout-minutes }}"
       shell: bash
     - run: echo "runner.os ${{ runner.os }}"
+      shell: bash
+    - name: Conditional echo
+      if: ${{ inputs.condition }} != ''
+      run: echo "Condition=${{ inputs.condition }}"
       shell: bash
 
     - name: Checkout branch
