@@ -124,8 +124,12 @@ runs:
       shell: bash
     - run: echo "runner.os ${{ runner.os }}"
       shell: bash
+    - name: Conditional echo
+      if: inputs.condition != ''
+      run: echo "Condition=${{ inputs.condition }}"
+      shell: bash
     - name: Conditional joke
-      if: ${{ inputs.condition }} != ''
+      if: inputs.condition == ''
       uses: h2floh/action-get-joke-of-the-day@v1
 
     - name: Checkout branch
