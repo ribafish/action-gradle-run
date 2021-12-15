@@ -118,6 +118,8 @@ runs:
     - run: echo "timeout-minutes ${{ inputs.timeout-minutes }}"
       shell: bash
 
+    - name: Checkout branch
+      uses: actions/checkout@v2
     - name: Run Gradle task
       working-directory: ./${{ inputs.gradle_workDir }}
       shell: bash
